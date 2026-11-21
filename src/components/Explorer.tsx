@@ -56,7 +56,7 @@ export default function Explorer({ articles }: { articles: Article[] }) {
         <thead><tr>{heading('Date', 'date')}{heading('Headline', 'headline')}{heading('Publication', 'publication')}<th scope="col">Authors</th><th scope="col">Type</th>{heading('Tone', 'sentiment')}<th scope="col">Topic</th><th scope="col">Evidence</th><th scope="col">Funding</th><th scope="col">Source</th></tr></thead>
         <tbody>{filtered.map(a => <tr key={a.id} className={`tone-row ${a.sentiment.toLowerCase()}`}>
           <td className="mono-cell">{a.date}</td>
-          <td className="headline-cell"><a href={articles.some(seed => seed.id === a.id) ? `/articles/${a.id}/` : a.source}>{a.headline}</a><small>METADATA VERIFIED</small></td>
+          <td className="headline-cell"><a href={`/articles/${a.id}/`}>{a.headline}</a><small>METADATA VERIFIED</small></td>
           <td>{a.publication}</td><td>{a.authors.join(', ')}</td><td><span className="table-type">{a.type}</span></td>
           <td><span className={`badge ${a.sentiment.toLowerCase()}`}>{a.sentiment}</span></td>
           <td>{a.topic}</td><td><span className="evidence-dot" />{a.evidence}</td><td className="muted">Not established</td>
