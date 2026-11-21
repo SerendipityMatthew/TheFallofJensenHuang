@@ -1,0 +1,19 @@
+[
+  {"articleId":"ap-2026-11-20-export-restrictions","eventId":"nvidia-ceo-transition-2026-11-12","type":"Background analysis"},
+  {"articleId":"reuters-breakingviews-2026-11-18-cyran","eventId":"nvidia-quarterly-results-2026-11-17","type":"Commentary"},
+  {"articleId":"ap-2026-11-18-ceo-reactions","eventId":"nvidia-ceo-transition-2026-11-12","type":"Follow-up report"},
+  {"articleId":"fortune-2026-11-17-lichtenberg","eventId":"nvidia-quarterly-results-2026-11-17","type":"Background analysis"},
+  {"articleId":"ap-2026-11-17-statement","eventId":"nvidia-ceo-transition-2026-11-12","type":"Follow-up report"},
+  {"articleId":"ap-2026-11-19-china-chip-curbs","eventId":"nvidia-ceo-transition-2026-11-12","type":"Follow-up report"},
+  {"articleId":"ap-2026-11-17-board-rejection","eventId":"nvidia-quarterly-results-2026-11-17","type":"Follow-up report"},
+  {"articleId":"guardian-2026-11-12-resignation","eventId":"nvidia-ceo-transition-2026-11-12","type":"Follow-up report"},
+  {"articleId":"guardian-2026-11-13-chronology","eventId":"nvidia-ceo-transition-2026-11-12","type":"Background analysis"},
+  {"articleId":"guardian-2026-11-17-testimony","eventId":"house-interviews-2026-11-17","type":"Follow-up report"},
+  {"articleId":"techcrunch-2026-11-09-summit","eventId":"nvidia-board-investigation-2026-11-08","type":"Background analysis"},
+  {"articleId":"techcrunch-2026-11-12-testimony","eventId":"nvidia-ceo-transition-2026-11-12","type":"Follow-up report"},
+  {"articleId":"techcrunch-2026-11-17-return-offer","eventId":"nvidia-ceo-transition-2026-11-12","type":"Follow-up report"},
+  {"articleId":"techcrunch-2026-11-17-board","eventId":"nvidia-quarterly-results-2026-11-17","type":"Follow-up report"},
+  {"articleId":"wired-2026-11-12-resignation","eventId":"nvidia-ceo-transition-2026-11-12","type":"Follow-up report"},
+  {"articleId":"wired-2026-11-17-board","eventId":"nvidia-quarterly-results-2026-11-17","type":"Follow-up report"},
+  {"articleId":"wired-2026-11-20-board-candor","eventId":"nvidia-ceo-transition-2026-11-12","type":"Investigation"}
+]

@@ -12,7 +12,10 @@ export async function loadArticles(fallback: Article[]): Promise<Article[]> {
       type: row.article_type, sentiment: row.sentiment, topic: row.topic,
       evidence: row.evidence_level, summary: row.summary,
       classificationReason: row.classification_reason,
-      source: row.canonical_url, verifiedOn: row.source_checked_at
+      source: row.canonical_url, verifiedOn: row.source_checked_at,
+      originalPublishedAt: row.original_published_at, originalTimezone: row.original_timezone,
+      language: row.language, region: row.region,
+      secondaryTopics: JSON.parse(row.secondary_topics || '[]')
     }));
   } catch { return fallback; }
 }

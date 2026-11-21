@@ -1,0 +1,29 @@
+name: Research maintenance
+on:
+  schedule:
+    - cron: '20 3 * * *'
+  workflow_dispatch:
+jobs:
+  drafts-and-checks:
+    runs-on: ubuntu-latest
+    env:
+      ARCHIVE_URL: ${{ secrets.ARCHIVE_URL }}
+      ARCHIVE_ADMIN_TOKEN: ${{ secrets.ARCHIVE_ADMIN_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: node scripts/monitor-sources.mjs
+      - name: Discover publisher feed leads
+        if: env.ARCHIVE_URL != '' && env.ARCHIVE_ADMIN_TOKEN != ''
+        run: ADMIN_TOKEN="$ARCHIVE_ADMIN_TOKEN" node scripts/discover-feeds.mjs "$ARCHIVE_URL" research/feeds.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: research-drafts-and-source-checks
+          path: |
+            dist/reports/
+            source-monitor-results.json
