@@ -10,22 +10,31 @@ const sentimentCount = (s: string) => articles.filter(a => a.sentiment === s).le
     <p class="lede">A public, source-linked record of articles, columns, investigations and news reports about Jensen Huang. We log who wrote what, when, and where — and we link to the original. We do not infer motivation or coordination from timing, affiliation or shared topics.</p>
   </section>
 
-  <section class="grid-4" style="margin-bottom:2rem;">
-    <div class="tile"><div class="num">{metrics.articles}</div><div class="label">Verified articles</div></div>
-    <div class="tile"><div class="num">{metrics.journalists}</div><div class="label">Credited journalists</div></div>
-    <div class="tile"><div class="num">{metrics.publications}</div><div class="label">Publications</div></div>
-    <div class="tile"><div class="num">{metrics.critical}</div><div class="label">Classified as critical</div></div>
+  <section>
+    <h2>At a glance</h2>
+    <table>
+      <thead><tr><th>Metric</th><th style="text-align:right">Count</th></tr></thead>
+      <tbody>
+        <tr><td>Verified articles</td><td style="text-align:right; font-family:var(--serif); font-size:1.1rem;">{metrics.articles}</td></tr>
+        <tr><td>Credited journalists</td><td style="text-align:right; font-family:var(--serif); font-size:1.1rem;">{metrics.journalists}</td></tr>
+        <tr><td>Publications</td><td style="text-align:right; font-family:var(--serif); font-size:1.1rem;">{metrics.publications}</td></tr>
+        <tr><td>Classified as critical</td><td style="text-align:right; font-family:var(--serif); font-size:1.1rem;">{metrics.critical}</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section>
     <h2>Sentiment breakdown</h2>
-    <div class="filters">
-      <span class="pill critical">Critical · {sentimentCount('Critical')}</span>
-      <span class="pill mixed">Mixed · {sentimentCount('Mixed')}</span>
-      <span class="pill neutral">Neutral · {sentimentCount('Neutral')}</span>
-      <span class="pill supportive">Supportive · {sentimentCount('Supportive')}</span>
-    </div>
-    <p style="color:var(--muted); font-size:0.9rem;">Each label describes an article's framing, not whether its claims are true. Read the source before drawing conclusions.</p>
+    <table>
+      <thead><tr><th>Label</th><th style="text-align:right">Articles</th><th>What the label means</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill critical">Critical</span></td><td style="text-align:right">{sentimentCount('Critical')}</td><td style="color:var(--muted)">Framing centred on scrutiny, risk or negative consequences.</td></tr>
+        <tr><td><span class="pill mixed">Mixed</span></td><td style="text-align:right">{sentimentCount('Mixed')}</td><td style="color:var(--muted)">Scrutiny and supportive framing in the same piece.</td></tr>
+        <tr><td><span class="pill neutral">Neutral</span></td><td style="text-align:right">{sentimentCount('Neutral')}</td><td style="color:var(--muted)">Descriptive reporting without explicit framing either way.</td></tr>
+        <tr><td><span class="pill supportive">Supportive</span></td><td style="text-align:right">{sentimentCount('Supportive')}</td><td style="color:var(--muted)">Framing centred on achievement, defence or positive outcomes.</td></tr>
+      </tbody>
+    </table>
+    <p style="color:var(--muted); font-size:0.9rem;">Each label describes an article's framing, not whether its claims are true.</p>
   </section>
 
   <section>
