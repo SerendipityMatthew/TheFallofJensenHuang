@@ -1,0 +1,33 @@
+[
+  {
+    "id":"event-nvidia-ceo-transition-2026-11-12",
+    "type":"Event",
+    "subjectId":"nvidia-ceo-transition-2026-11-12",
+    "title":"NVIDIA's 2026 CEO transition: documented facts and coverage",
+    "status":"Draft",
+    "lastReviewed":"2026-11-21",
+    "sources":["https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition/","https://nvidianews.nvidia.com/news/statement-from-nvidia-board-of-directors","https://nvidianews.nvidia.com/news/statement-from-the-independent-members-of-the-nvidia-board","https://www.theguardian.com/technology/2026/nov/12/nvidia-ceo-jensen-huang-resigns","https://www.wired.com/story/nvidia-ceo-jensen-huang-steps-down/"],
+    "sections":[
+      {"heading":"Overview","body":"On 12 November 2026 NVIDIA announced that Jensen Huang had resigned as president, chief executive officer, and a board member. The company named Colette Kress interim chief executive and Harvey C. Jones board chair. Those leadership changes are documented in NVIDIA's own announcement. The announcement does not, by itself, establish the truth of every allegation discussed in contemporaneous news coverage."},
+      {"heading":"Chronology","body":"On 8 November NVIDIA's board announced an independent investigation. On 10 November independent directors announced outside counsel. On 12 November the company announced the leadership transition. These dates are announcement dates; the precise times of underlying private decisions are not established in the public documents reviewed here."},
+      {"heading":"Contested allegations","body":"News outlets discussed allegations concerning Huang's personal conduct, a former executive at Megaspeed, and possible national-security implications. This report attributes those allegations to the linked publications. It does not reach an independent finding on espionage, export-control violations, or the board's private reasoning."},
+      {"heading":"Responses and later developments","body":"The 8 November board statement said it then had no reason to believe national-security or company secrets had been compromised. Later coverage reported debate over Huang's possible return and further scrutiny. This report remains a draft while claim-level evidence and subsequent developments are reviewed."},
+      {"heading":"Outstanding questions","body":"What findings, if any, will the independent investigation publish? Which claims in the reporting can be checked against primary records? How did coverage change after the board's later statements?"}
+    ]
+  },
+  {
+    "id":"media-board-decision-2026-11-17",
+    "type":"Media coverage",
+    "subjectId":"nvidia-quarterly-results-2026-11-17",
+    "title":"How outlets covered NVIDIA's board decision on Huang's return",
+    "status":"Draft",
+    "lastReviewed":"2026-11-21",
+    "sources":["https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-third-quarter-fiscal-2027","https://apnews.com/article/nvidia-jensen-huang-china-national-security-chips-3026bcbe04ab57b844884382e583422a","https://techcrunch.com/2026/11/17/nvidia-says-it-doesnt-plan-to-reappoint-jensen-huang-as-ceo/","https://www.wired.com/story/nvidias-board-has-no-plans-to-reinstate-jensen-huang/","https://fortune.com/2026/11/17/nvidia-chair-harvey-jones-jensen-huang-comeback-earnings-call-analysts-china-singapore/"],
+    "sections":[
+      {"heading":"Coverage overview","body":"Several checked outlets reported on NVIDIA's 17 November earnings call and its chair's statement that the board did not intend to reinstate Huang. AP, TechCrunch, WIRED, and Fortune each used a different headline emphasis. The shared board statement is a documented source; headline similarity is not evidence that outlets coordinated their coverage."},
+      {"heading":"Framing differences","body":"AP framed the board decision alongside pressure from Silicon Valley and other responses. TechCrunch led with the company's decision and Huang's earlier public offer. WIRED paired the decision with business performance and support from executives and employees. Fortune's analysis highlighted questions it said analysts did not ask on the call. These descriptions concern the sampled pieces, not each outlet's complete coverage."},
+      {"heading":"Reporting versus analysis","body":"The AP, TechCrunch and WIRED entries are classified as news. The Fortune piece is classified as analysis. Those labels describe article form, not credibility. This comparison does not independently verify all claims beyond the cited company statement and checked publisher metadata."},
+      {"heading":"Corrections and limits","body":"No publisher correction has been logged for these sampled articles in the archive. That is not proof none exists. The comparison remains a draft until more publications, byline-level source use, and later updates have been checked."}
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import { events, articles, articleEvents } from '../../lib/data';
+export function getStaticPaths() { return events.map(event => ({ params: { id: event.id }, props: { event } })); }
+const { event } = Astro.props;
+const linked = articleEvents.filter(link => link.eventId === event.id).map(link => ({ ...link, article: articles.find(article => article.id === link.articleId)! })).filter(link => link.article);
+---
+<Base title={event.title} description={event.summary}>
+  <div class="page-heading"><a class="inline-link" href="/timeline">← Master timeline</a><div style="height:22px"></div><span class="kicker">DOCUMENTED EVENT / {event.verificationStatus.toUpperCase()}</span><h1>{event.title}</h1><p>{event.summary}</p></div>
+  <div class="event-dates panel"><div><span>OCCURRED</span><strong>{event.occurredAt}</strong></div><div><span>PUBLICLY ANNOUNCED</span><strong>{event.publicAt}</strong></div><div><span>LAST CHECKED</span><strong>{event.lastChecked}</strong></div></div>
+  <div class="section-head"><h2>Primary evidence</h2></div><div class="source-list">{event.sources.map(source => <a class="panel" href={source.url} target="_blank" rel="noopener noreferrer"><span class="kicker">{source.type}</span><strong>{source.url}</strong></a>)}</div>
+  <div class="section-head"><h2>Reporting and commentary about this event</h2><span class="meta">{linked.length} LINKED ARTICLES</span></div><div class="event-coverage">{linked.map(link => <a class="panel" href={`/articles/${link.article.id}/`}><span class="meta">{link.article.date} / {link.article.publication} / {link.type}</span><strong>{link.article.headline}</strong></a>)}</div>
+  <p class="muted event-caution">A publication date describes when an outlet reported on the event. It does not establish that the outlet caused it.</p>
+</Base>
+<style>.event-dates{display:grid;grid-template-columns:repeat(3,1fr);margin-top:28px}.event-dates>div{padding:23px;border-right:1px solid #30404e}.event-dates>div:last-child{border:0}.event-dates span{display:block;color:#94a9b7;font:11px 'IBM Plex Mono',monospace;margin-bottom:9px}.event-dates strong{font:600 20px 'Playfair Display',serif}.source-list,.event-coverage{display:grid;gap:12px}.source-list a,.event-coverage a{padding:18px 22px;display:grid;gap:7px}.source-list a:hover,.event-coverage a:hover{border-color:#e0766e}.source-list strong{font-size:12px;overflow-wrap:anywhere;font-weight:400}.event-coverage strong{font:600 18px 'Playfair Display',serif}.event-caution{font-size:12px;margin-top:20px}@media(max-width:600px){.event-dates{grid-template-columns:1fr}.event-dates>div{border-right:0;border-bottom:1px solid #30404e}}</style>

@@ -1,0 +1,8 @@
+---
+import Base from '../../layouts/Base.astro';
+import { reports } from '../../lib/reports';
+export function getStaticPaths() { return reports.map(report => ({ params: { id: report.id }, props: { report } })); }
+const { report } = Astro.props;
+---
+<Base title={report.title} description={report.sections[0].body}><div class="page-heading"><a class="inline-link" href="/reports">← All reports</a><div style="height:22px"></div><span class="kicker">{report.type.toUpperCase()} REPORT / {report.status.toUpperCase()}</span><h1>{report.title}</h1><p>{report.lastReviewed ? `Last reviewed ${report.lastReviewed}` : 'Automatically generated draft · awaiting editorial review'}</p></div><div class="report-layout"><article class="prose">{report.sections.map(section => <section><h2>{section.heading}</h2><p>{section.body}</p></section>)}</article><aside class="panel source-panel"><span class="kicker">SOURCE REGISTER</span><p>{report.sources.length} linked sources. A source link supports the report text only where specifically attributed.</p>{report.sources.map((url, index) => <a href={url} target="_blank" rel="noopener noreferrer">{String(index + 1).padStart(2, '0')} · {new URL(url).hostname} ↗</a>)}</aside></div></Base>
+<style>.report-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:50px;margin-top:25px}.source-panel{padding:23px;align-self:start;position:sticky;top:20px}.source-panel p{font-size:12px;color:#9aabb8;line-height:1.5;margin:15px 0}.source-panel a{display:block;border-top:1px solid #30404d;padding:11px 0;color:#ef877f;font:11px 'IBM Plex Mono',monospace;overflow-wrap:anywhere}@media(max-width:850px){.report-layout{grid-template-columns:1fr}.source-panel{position:static}}</style>
