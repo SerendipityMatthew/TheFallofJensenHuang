@@ -1,47 +1,7 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { articles, journalists, slug as toSlug } from '../../lib/data';
-
-export function getStaticPaths() {
-  return journalists.map(name => ({ params: { slug: toSlug(name) }, props: { name } }));
-}
-
-const { name } = Astro.props as { name: string };
-const byThem = articles.filter(a => (a.authors as string[]).includes(name));
-const sentimentCount = (s: string) => byThem.filter(a => a.sentiment === s).length;
-const publications = [...new Set(byThem.map(a => a.publication))];
+import Base from '../../layouts/Base.astro';import {articles,journalists,slug} from '../../lib/data';
+export function getStaticPaths(){return journalists.map(name=>({params:{slug:slug(name)},props:{name}}))}
+const {name}=Astro.props;const work=articles.filter(a=>a.authors.includes(name));const pubs=[...new Set(work.map(a=>a.publication))];
 ---
-<Layout title={name}>
-  <section style="padding:2.5rem 0 1rem;">
-    <p style="color:var(--muted)"><a href="/journalists">← All journalists</a></p>
-    <h1>{name}</h1>
-    <p class="lede">Verified bylines in this archive. Sentiment labels describe article framing, not the author's personal views.</p>
-  </section>
-
-  <div class="filters">
-    <span class="pill">Articles · {byThem.length}</span>
-    <span class="pill">Publications · {publications.length}</span>
-    {['Critical','Mixed','Neutral','Supportive'].map(s => sentimentCount(s) > 0 && (
-      <span class={`pill ${s.toLowerCase()}`}>{s} · {sentimentCount(s)}</span>
-    ))}
-  </div>
-
-  <table>
-    <thead><tr><th>Date</th><th>Headline</th><th>Publication</th><th>Type</th><th>Sentiment</th></tr></thead>
-    <tbody>
-      {byThem.map(a => (
-        <tr>
-          <td style="color:var(--muted); white-space:nowrap;">{a.date}</td>
-          <td><a href={a.source} target="_blank" rel="noopener noreferrer">{a.headline}</a></td>
-          <td>{a.publication}</td>
-          <td>{a.type}</td>
-          <td><span class={`pill ${a.sentiment.toLowerCase()}`}>{a.sentiment}</span></td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-
-  <p style="color:var(--muted); margin-top:1.5rem; font-size:0.9rem;">
-    This page lists published work only. See <a href="/methodology">Methodology</a> for how classifications are assigned and corrected; email the maintainer or open an issue to report an error.
-  </p>
-</Layout>
+<Base title={name}><div class="page-heading"><a class="inline-link" href="/journalists">← All journalists</a><div style="height:25px"></div><span class="kicker">VERIFIED BYLINE PROFILE</span><h1>{name}</h1><p>{pubs.join(' · ')} · Affiliation on linked articles; employment dates have not been independently established.</p></div><div class="profile-stats"><div><strong>{work.length}</strong><span>AUTHORED / CO-AUTHORED</span></div><div><strong>{work.filter(a=>a.authors.length>1).length}</strong><span>CO-AUTHORED</span></div><div><strong>{[...new Set(work.map(a=>a.topic))].length}</strong><span>TOPICS IN FILE</span></div></div><div class="section-head"><h2>Verified coverage</h2></div><div class="profile-list">{work.map(a=><a class="panel" href={`/articles/${a.id}/`}><span class="meta">{a.date} / {a.publication}</span><h3>{a.headline}</h3><span class:list={['badge',a.sentiment.toLowerCase()]}>{a.sentiment}</span></a>)}</div><div class="section-head"><h2>Financial relationships</h2></div><div class="empty panel"><strong>None established in this file</strong><p>No documented funding relationship has been added for this person. This is not a claim that none exists.</p></div></Base>
+<style>.profile-stats{display:flex;border-bottom:1px solid #30404e}.profile-stats>div{padding:28px 45px 28px 0;min-width:170px}.profile-stats strong{font:600 36px 'Playfair Display',serif;display:block}.profile-stats span{font:11px 'IBM Plex Mono',monospace;color:#93a5b5}.profile-list{display:grid;gap:12px}.profile-list a{padding:22px}.profile-list a:hover{border-color:#e0645d}.profile-list h3{font:600 20px 'Playfair Display',serif;margin:12px 0}.profile-stats>div:first-child{padding-left:0}@media(max-width:600px){.profile-stats{justify-content:space-between}.profile-stats>div{min-width:0;padding-right:10px}.profile-stats span{font-size:9px}}</style>

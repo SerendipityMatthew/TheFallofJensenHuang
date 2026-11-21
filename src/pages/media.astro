@@ -1,12 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import MediaComparison from '../components/MediaComparison.tsx';
-import { articles } from '../lib/data';
+import Base from '../layouts/Base.astro';import {articles,publications} from '../lib/data';
 ---
-<Layout title="Media comparison">
-  <section style="padding:2.5rem 0 1rem;">
-    <h1>Media comparison</h1>
-    <p class="lede">Verified articles per publication, with sentiment mix. These counts reflect only what we have logged — not the publication's full output on the topic.</p>
-  </section>
-  <MediaComparison client:only="react" articles={articles} />
-</Layout>
+<Base title="Media comparison"><div class="page-heading"><span class="kicker">PUBLICATION LENS</span><h1>Media comparison</h1><p>Counts describe the source checked entries currently in this file. They are not a census of all coverage by each outlet.</p></div><div class="media-grid">{publications.map(name=>{const work=articles.filter(a=>a.publication===name);const tones=['Critical','Mixed','Neutral','Supportive'];return <section class="media-card panel"><span class="kicker">PUBLICATION</span><h2>{name}</h2><div class="media-count"><strong>{work.length}</strong><span>verified records</span></div><div class="tone-bar">{tones.map(t=><span title={`${t}: ${work.filter(a=>a.sentiment===t).length}`} style={`width:${work.filter(a=>a.sentiment===t).length/work.length*100}%;background:${{Critical:'#e0645d',Mixed:'#d7a86a',Neutral:'#5b8fa9',Supportive:'#73b695'}[t]}`}></span>)}</div><div class="media-facts"><div><span>AUTHORS</span><strong>{new Set(work.flatMap(a=>a.authors)).size}</strong></div><div><span>TOPICS</span><strong>{[...new Set(work.map(a=>a.topic))].join(', ')}</strong></div><div><span>ARTICLE TYPES</span><strong>{[...new Set(work.map(a=>a.type))].join(', ')}</strong></div></div></section>})}</div><p class="muted">Additional publications in the research brief appear here when at least one original article is checked and entered.</p></Base>
+<style>.media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin:30px 0}.media-card{padding:26px}.media-card h2{font:600 25px 'Playfair Display',serif;margin:14px 0 22px}.media-count{display:flex;align-items:end;gap:10px}.media-count strong{font:600 44px 'Playfair Display',serif}.media-count span{color:#9aabba;font-size:12px;padding-bottom:9px}.tone-bar{height:6px;display:flex;overflow:hidden;background:#2e3d49;margin:20px 0 28px}.media-facts>div{display:flex;justify-content:space-between;gap:15px;border-top:1px solid #2b3945;padding:11px 0;font-size:12px}.media-facts span{color:#8fa1af;font:10px 'IBM Plex Mono',monospace;white-space:nowrap}.media-facts strong{text-align:right;font-weight:500}@media(max-width:1100px){.media-grid{grid-template-columns:1fr 1fr}}@media(max-width:650px){.media-grid{grid-template-columns:1fr}}</style>

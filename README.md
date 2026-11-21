@@ -1,65 +1,48 @@
-# Jensen Huang Media Coverage Archive
+# Jensen Coverage Watch
 
-A public, source-linked record of media coverage of Jensen Huang. Static Astro site, with a Cloudflare Pages Function for admin submissions backed by D1.
+An evidence-first media coverage tracker built with Astro, React, Apache ECharts, Cloudflare Pages Functions, and D1. The public dataset is deliberately small: five publisher pages checked on 21 November 2026. The displayed counts come from those records, not an estimate of all coverage.
 
-## What it is — and is not
-
-- A record of articles with links to their original sources.
-- A side-by-side view of positive, neutral, mixed and critical coverage.
-- **Not** a verdict on the truth of any article's claims — sentiment labels describe framing, not facts.
-- **Not** a dossier — journalist pages show public bylines only; no private information, no inferred motivation, no auto-coordination claims.
-
-See `/methodology` for the full set of rules.
-
-## Develop
+## Run locally
 
 ```bash
 npm install
-npm run dev     # Astro dev server
-npm test        # dedup + publish-gate tests
-npm run db:seed # regenerate migrations/0002_seed.sql from src/data/verified.json
+npm run dev
+npm test
+npm run build
 ```
 
-The public site reads `src/data/verified.json` at build time. In production, admins submit new articles via the Pages Function (`functions/api/[[path]].ts`) which writes to D1; curated entries are mirrored back into `verified.json` for the next static build.
-
-## Data model
-
-See [`migrations/0001_initial.sql`](migrations/0001_initial.sql). Tables: `publications`, `journalists`, `articles`, `article_authors`, `sources`, `claims`, `funding_organizations`, `funding_relationships`, `corrections`, `verification_records`, `submissions`, `audit_log`.
-
-Metadata verification (`metadata_status`) is independent of claim verification (`claim_status`). Only `published_in_tracker = 1` rows appear on the public site.
-
-## Deploy (Cloudflare Pages + D1)
-
-1. Create the D1 database:
-
-   ```bash
-   npx wrangler d1 create jensen-coverage
-   ```
-
-2. Paste the returned `database_id` into `wrangler.toml`.
-
-3. Apply schema + seed to the remote DB:
-
-   ```bash
-   npx wrangler d1 execute jensen-coverage --remote --file=migrations/0001_initial.sql
-   npx wrangler d1 execute jensen-coverage --remote --file=migrations/0002_seed.sql
-   ```
-
-4. In the Pages project settings, add an environment variable `ADMIN_TOKEN` (a long random string) and bind the D1 database as `D1`.
-
-5. Connect the repo to Cloudflare Pages. Build command: `npm run build`. Output directory: `dist`.
-
-## Submit an article (admin)
+Astro preview uses the curated file in `src/data/verified.json`. To test the live API and editor queue locally:
 
 ```bash
-curl -X POST https://<your-domain>/api/submissions \
-  -H "authorization: Bearer $ADMIN_TOKEN" \
-  -H "content-type: application/json" \
-  -d '{"source":"https://...","headline":"...","sourceKind":"manual"}'
+npx wrangler d1 execute jensen-coverage --local --file=migrations/0001_initial.sql
+npx wrangler d1 execute jensen-coverage --local --file=migrations/0002_seed.sql
+printf 'ADMIN_TOKEN=choose-a-local-test-value\n' > .dev.vars
+npx wrangler pages dev dist
 ```
 
-Review (approve / reject) via `/api/submissions/:id/review` with the same header. Only metadata-verified submissions with headline + publication + date + authors + check date are published. Rejected and pending submissions stay in the database for audit.
+Open `/admin` on the Pages dev server and enter the local token. `.dev.vars` and `.wrangler/` are ignored by Git. Run `npm run db:seed` after changing the curated JSON; it regenerates the SQL seed. Keep sample experiments in the local D1 database, never in `verified.json` or the remote production D1 database.
 
-## Correct an error
+## Research workflow
 
-Open an issue naming the article id and the field in error, with a link supporting the correction. We log every change with the original and revised value.
+- Public records have checked original publisher URLs, exact headlines, dates, credited authors, and a source check date. Claim verification is separate from metadata verification.
+- `/admin` accepts a lead URL and headline. Editors review the original source, complete the metadata and classification fields, then approve or reject. Pending and rejected leads are not public. The review action is logged in D1.
+- The `/api/articles` endpoint drives the live explorer, timeline, and homepage metrics. New D1 records link to their original source until a curated build adds static article and journalist profile pages.
+- `scripts/submit-leads.mjs` accepts newline-delimited `{ "source": "...", "headline": "..." }` records from a licensed RSS, news API, publisher metadata, or manual research export. It queues leads; it does not scrape publishers or auto-publish them. Example: `ADMIN_TOKEN=... node scripts/submit-leads.mjs https://your-site.pages.dev leads.ndjson rss`.
+- Funding, corrections, and individual claims have schema support. No funding relationship, editorial influence finding, or correction is asserted in the current public file.
+
+The production seed is curated, while the local D1 instance is the development sandbox. Do not add unverified or fictional sample records to the production seed.
+
+## Deploy to Cloudflare Pages
+
+1. Create a D1 database: `npx wrangler d1 create jensen-coverage`.
+2. Replace `database_id` in `wrangler.toml` with the returned ID.
+3. Apply `migrations/0001_initial.sql` and `migrations/0002_seed.sql` with `npx wrangler d1 execute jensen-coverage --remote --file=<migration>`.
+4. Create a Cloudflare Pages project connected to this repository. Set the build command to `npm run build` and output directory to `dist`.
+5. Bind the D1 database to the Pages project as `D1`. Add a secret `ADMIN_TOKEN` with a long, unique random value. Set bindings and the secret for the production environment (and preview only if needed).
+6. Deploy. Verify `/api/articles` returns the curated records and `/api/submissions` returns 401 without the editor token.
+
+Static article and journalist profile pages require a rebuild after new approvals. For a fully live profile system, move those routes to a D1-backed server renderer. This MVP keeps publisher metadata in one checked source file for reviewable builds.
+
+## Important limits
+
+The source file is a curated sample, not an exhaustive archive. News API and RSS inputs require lawful upstream access and are not fetched automatically. Funding and narrative analysis show only what the current evidence supports. The application does not claim a funding relationship proves influence or that similar stories prove coordination.
