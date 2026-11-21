@@ -1,5 +1,16 @@
 ---
-import Base from '../../layouts/Base.astro';import {articles,journalists,slug} from '../../lib/data';
+import Base from '../../layouts/Base.astro';
+import { articles, journalists, slug } from '../../lib/data';
+const tones = ['Critical', 'Mixed', 'Neutral', 'Supportive'];
 ---
-<Base title="Journalists"><div class="page-heading"><span class="kicker">BYLINES / VERIFIED RECORDS</span><h1>Journalist directory</h1><p>This directory includes only named contributors on verified entries. A research candidate list is not treated as a confirmed roster.</p></div><div class="directory">{journalists.map(name=>{const work=articles.filter(a=>a.authors.includes(name));return <a href={`/journalists/${slug(name)}/`} class="person-card panel"><span class="monogram">{name.split(' ').map(part=>part[0]).slice(0,2).join('')}</span><div><h2>{name}</h2><p>{[...new Set(work.map(a=>a.publication))].join(' · ')}</p><span class="meta">{work.length} VERIFIED {work.length===1?'ARTICLE':'ARTICLES'}</span></div><span class="person-arrow">↗</span></a>})}</div></Base>
-<style>.directory{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:30px 0}.person-card{padding:23px;display:flex;align-items:center;gap:18px}.person-card:hover{border-color:#d86a64}.monogram{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:#263442;color:#dce8ef;font:18px 'Playfair Display',serif;flex:none}.person-card h2{font:600 22px 'Playfair Display',serif;margin:0 0 5px}.person-card p{font-size:13px;color:#a4b4c1;margin:0 0 9px}.person-arrow{margin-left:auto;color:#e37870}@media(max-width:650px){.directory{grid-template-columns:1fr}}</style>
+<Base title="Journalists">
+  <div class="page-heading"><span class="kicker">BYLINES / VERIFIED RECORDS</span><h1>Journalist directory</h1><p>This directory includes only named contributors on verified entries. A research candidate list is not treated as a confirmed roster.</p></div>
+  <div class="section-head"><div><span class="kicker">BYLINE MATRIX</span><h2>People in the file</h2></div><span class="meta">{journalists.length} VERIFIED CONTRIBUTORS</span></div>
+  <div class="table-legend"><span><i class="critical"></i>Critical</span><span><i class="mixed"></i>Mixed</span><span><i class="neutral"></i>Neutral</span><span><i class="supportive"></i>Supportive</span></div>
+  <div class="data-table-wrap panel" role="region" aria-label="Journalist directory table" tabindex="0">
+    <table class="data-table people-table"><thead><tr><th scope="col">Journalist</th><th scope="col">Publication in file</th><th scope="col">Articles</th><th scope="col">Co-authored</th><th scope="col">Tone distribution</th><th scope="col">Topics</th></tr></thead><tbody>
+      {journalists.map(name => { const work = articles.filter(a => a.authors.includes(name)); return <tr><td><a class="person-cell" href={`/journalists/${slug(name)}/`}><span class="monogram">{name.split(' ').map(part => part[0]).slice(0, 2).join('')}</span><strong>{name}</strong><span class="person-arrow">↗</span></a></td><td>{[...new Set(work.map(a => a.publication))].join(' · ')}</td><td><strong class="volume-number">{work.length}</strong></td><td><span class="count-chip">{work.filter(a => a.authors.length > 1).length}</span></td><td><div class="distribution" role="img" aria-label={tones.map(t => `${t}: ${work.filter(a => a.sentiment === t).length}`).join(', ')}>{tones.map(t => { const count = work.filter(a => a.sentiment === t).length; return count ? <span class={t.toLowerCase()} style={`width:${count / work.length * 100}%`} title={`${t}: ${count}`}></span> : null; })}</div><small class="distribution-caption">{tones.filter(t => work.some(a => a.sentiment === t)).join(' · ')}</small></td><td>{[...new Set(work.map(a => a.topic))].join(' · ')}</td></tr>; })}
+    </tbody></table>
+  </div>
+  <p class="muted table-footnote">Affiliations describe these bylines only; employment dates are not inferred.</p>
+</Base>
