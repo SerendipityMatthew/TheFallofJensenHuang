@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { articles, journalists, slug } from '../../lib/data';
+const rows = journalists.map(name => {
+  const byThem = articles.filter(a => (a.authors as string[]).includes(name));
+  return {
+    name,
+    slug: slug(name),
+    count: byThem.length,
+    publications: [...new Set(byThem.map(a => a.publication))],
+  };
+}).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+---
+<Layout title="Journalists">
+  <section style="padding:2.5rem 0 1rem;">
+    <h1>Credited journalists</h1>
+    <p class="lede">Only journalists with a verified byline in this archive are listed. Profiles show published work; no personal information is recorded, and no motivation is inferred.</p>
+  </section>
+  <table>
+    <thead><tr><th>Journalist</th><th>Articles</th><th>Publications</th></tr></thead>
+    <tbody>
+      {rows.map(r => (
+        <tr>
+          <td><a href={`/journalists/${r.slug}`}>{r.name}</a></td>
+          <td>{r.count}</td>
+          <td style="color:var(--muted)">{r.publications.join(', ')}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</Layout>

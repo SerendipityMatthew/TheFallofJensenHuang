@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { articles, journalists, slug as toSlug } from '../../lib/data';
+
+export function getStaticPaths() {
+  return journalists.map(name => ({ params: { slug: toSlug(name) }, props: { name } }));
+}
+
+const { name } = Astro.props as { name: string };
+const byThem = articles.filter(a => (a.authors as string[]).includes(name));
+const sentimentCount = (s: string) => byThem.filter(a => a.sentiment === s).length;
+const publications = [...new Set(byThem.map(a => a.publication))];
+---
+<Layout title={name}>
+  <section style="padding:2.5rem 0 1rem;">
+    <p style="color:var(--muted)"><a href="/journalists">← All journalists</a></p>
+    <h1>{name}</h1>
+    <p class="lede">Verified bylines in this archive. Sentiment labels describe article framing, not the author's personal views.</p>
+  </section>
+
+  <div class="filters">
+    <span class="pill">Articles · {byThem.length}</span>
+    <span class="pill">Publications · {publications.length}</span>
+    {['Critical','Mixed','Neutral','Supportive'].map(s => sentimentCount(s) > 0 && (
+      <span class={`pill ${s.toLowerCase()}`}>{s} · {sentimentCount(s)}</span>
+    ))}
+  </div>
+
+  <table>
+    <thead><tr><th>Date</th><th>Headline</th><th>Publication</th><th>Type</th><th>Sentiment</th></tr></thead>
+    <tbody>
+      {byThem.map(a => (
+        <tr>
+          <td style="color:var(--muted); white-space:nowrap;">{a.date}</td>
+          <td><a href={a.source} target="_blank" rel="noopener noreferrer">{a.headline}</a></td>
+          <td>{a.publication}</td>
+          <td>{a.type}</td>
+          <td><span class={`pill ${a.sentiment.toLowerCase()}`}>{a.sentiment}</span></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <p style="color:var(--muted); margin-top:1.5rem; font-size:0.9rem;">
+    This page lists published work only. See <a href="/methodology">Methodology</a> for how classifications are assigned and corrected; email the maintainer or open an issue to report an error.
+  </p>
+</Layout>

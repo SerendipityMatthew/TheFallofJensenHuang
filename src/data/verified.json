@@ -1,0 +1,57 @@
+[
+  {
+    "id": "reuters-breakingviews-2026-11-18-cyran",
+    "date": "2026-11-18", "updated": "2026-11-18",
+    "headline": "Nvidia leaves the AI trade hanging in purgatory",
+    "publication": "Reuters Breakingviews", "authors": ["Robert Cyran"],
+    "type": "Opinion", "sentiment": "Critical", "topic": "Governance", "evidence": "Attributed",
+    "summary": "The column examines uncertainty around Nvidia's leadership, export controls and support for AI infrastructure customers after Huang's departure.",
+    "classificationReason": "The column explicitly raises unresolved governance and business risks; this label describes its framing, not the truth of each claim.",
+    "source": "https://www.breakingviews.com/40925ca4af2b/columns/breaking-view/nvidia-leaves-ai-trade-hanging-purgatory-2026-11-18/",
+    "verifiedOn": "2026-11-21"
+  },
+  {
+    "id": "fortune-2026-11-17-lichtenberg",
+    "date": "2026-11-17", "updated": null,
+    "headline": "Nvidia chair closes the door on Jensen Huang comeback; analysts don’t push on China/Singapore black box",
+    "publication": "Fortune", "authors": ["Nick Lichtenberg"],
+    "type": "Analysis", "sentiment": "Critical", "topic": "Governance", "evidence": "Attributed",
+    "summary": "An analysis of Nvidia's earnings call, its chair's comments on Huang's possible return, and questions the author says analysts did not ask.",
+    "classificationReason": "The headline and analysis focus on unanswered questions and scrutiny of company leadership.",
+    "source": "https://fortune.com/2026/11/17/nvidia-chair-harvey-jones-jensen-huang-comeback-earnings-call-analysts-china-singapore/",
+    "verifiedOn": "2026-11-21"
+  },
+  {
+    "id": "ap-2026-11-20-export-restrictions",
+    "date": "2026-11-20", "updated": null,
+    "headline": "Treasury secretary says no further restrictions are needed for Nvidia chip exports to China",
+    "publication": "Associated Press", "authors": ["Kaitlyn Huamani", "Christopher Rugaber"],
+    "type": "News", "sentiment": "Mixed", "topic": "Export controls", "evidence": "Attributed",
+    "summary": "Reports Treasury Secretary Scott Bessent's comments about chip export restrictions alongside government, company, and congressional accounts.",
+    "classificationReason": "The report presents both scrutiny of exports and responses from Nvidia and officials.",
+    "source": "https://apnews.com/article/nvidia-chip-export-restrictions-china-bessent-lutnick-88142455395552afe74caec3399a648b",
+    "verifiedOn": "2026-11-21"
+  },
+  {
+    "id": "ap-2026-11-18-ceo-reactions",
+    "date": "2026-11-18", "updated": null,
+    "headline": "What tech CEOs are saying about the saga around Jensen Huang’s exit from Nvidia",
+    "publication": "Associated Press", "authors": ["Kaitlyn Huamani", "Barbara Ortutay"],
+    "type": "News", "sentiment": "Mixed", "topic": "Industry response", "evidence": "Attributed",
+    "summary": "Collects comments from technology leaders and former officials about Huang's departure and its implications.",
+    "classificationReason": "The article includes supportive remarks and discussion of reported controversies.",
+    "source": "https://apnews.com/article/nvidia-jensen-huang-tech-ceo-reactions-063310aae44182e67e55c04c5b1e29e4",
+    "verifiedOn": "2026-11-21"
+  },
+  {
+    "id": "ap-2026-11-17-statement",
+    "date": "2026-11-17", "updated": null,
+    "headline": "Jensen Huang breaks his silence. Read his full statement here",
+    "publication": "Associated Press", "authors": ["The Associated Press"],
+    "type": "News", "sentiment": "Neutral", "topic": "Personal conduct", "evidence": "Documented",
+    "summary": "Publishes Huang's own statement following his departure from Nvidia.",
+    "classificationReason": "The page principally reproduces a primary statement without an extended editorial argument.",
+    "source": "https://apnews.com/article/jensen-huang-return-nvidia-0f6d83fc6d97a30fc54bd66b5ac42eda",
+    "verifiedOn": "2026-11-21"
+  }
+]

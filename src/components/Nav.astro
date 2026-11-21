@@ -1,0 +1,21 @@
+---
+const links = [
+  { href: '/', label: 'Overview' },
+  { href: '/articles', label: 'Articles' },
+  { href: '/timeline', label: 'Timeline' },
+  { href: '/media', label: 'Media' },
+  { href: '/journalists', label: 'Journalists' },
+  { href: '/methodology', label: 'Methodology' },
+];
+const path = Astro.url.pathname;
+---
+<header style="border-bottom:1px solid var(--border); background:var(--panel-2);">
+  <nav class="container" style="display:flex; align-items:center; gap:1.5rem; padding:1rem 1.25rem; flex-wrap:wrap;">
+    <a href="/" style="font-family:var(--serif); font-weight:700; letter-spacing:-0.01em; color:var(--text);">JH Coverage Archive</a>
+    <ul style="display:flex; gap:1.25rem; list-style:none; margin:0 0 0 auto; padding:0; font-size:0.9rem; flex-wrap:wrap;">
+      {links.map(l => (
+        <li><a href={l.href} style={path === l.href ? 'color:var(--text)' : 'color:var(--muted)'}>{l.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+</header>

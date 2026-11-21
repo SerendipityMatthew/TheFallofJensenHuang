@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { articles, metrics } from '../lib/data';
+const recent = articles.slice(0, 6);
+const sentimentCount = (s: string) => articles.filter(a => a.sentiment === s).length;
+---
+<Layout title="Overview">
+  <section style="padding:3rem 0 1.5rem;">
+    <h1>Jensen Huang Media Coverage Archive</h1>
+    <p class="lede">A public, source-linked record of articles, columns, investigations and news reports about Jensen Huang. We log who wrote what, when, and where — and we link to the original. We do not infer motivation or coordination from timing, affiliation or shared topics.</p>
+  </section>
+
+  <section class="grid-4" style="margin-bottom:2rem;">
+    <div class="tile"><div class="num">{metrics.articles}</div><div class="label">Verified articles</div></div>
+    <div class="tile"><div class="num">{metrics.journalists}</div><div class="label">Credited journalists</div></div>
+    <div class="tile"><div class="num">{metrics.publications}</div><div class="label">Publications</div></div>
+    <div class="tile"><div class="num">{metrics.critical}</div><div class="label">Classified as critical</div></div>
+  </section>
+
+  <section>
+    <h2>Sentiment breakdown</h2>
+    <div class="filters">
+      <span class="pill critical">Critical · {sentimentCount('Critical')}</span>
+      <span class="pill mixed">Mixed · {sentimentCount('Mixed')}</span>
+      <span class="pill neutral">Neutral · {sentimentCount('Neutral')}</span>
+      <span class="pill supportive">Supportive · {sentimentCount('Supportive')}</span>
+    </div>
+    <p style="color:var(--muted); font-size:0.9rem;">Each label describes an article's framing, not whether its claims are true. Read the source before drawing conclusions.</p>
+  </section>
+
+  <section>
+    <h2>Recent coverage</h2>
+    <table>
+      <thead><tr><th>Date</th><th>Headline</th><th>Publication</th><th>Sentiment</th></tr></thead>
+      <tbody>
+        {recent.map(a => (
+          <tr>
+            <td style="color:var(--muted); white-space:nowrap;">{a.date}</td>
+            <td><a href={a.source} target="_blank" rel="noopener noreferrer">{a.headline}</a></td>
+            <td>{a.publication}</td>
+            <td><span class={`pill ${a.sentiment.toLowerCase()}`}>{a.sentiment}</span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p style="margin-top:1rem;"><a href="/articles">All articles →</a></p>
+  </section>
+</Layout>

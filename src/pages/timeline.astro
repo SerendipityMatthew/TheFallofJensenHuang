@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CoverageTimeline from '../components/CoverageTimeline.tsx';
+import { articles } from '../lib/data';
+---
+<Layout title="Timeline">
+  <section style="padding:2.5rem 0 1rem;">
+    <h1>Coverage timeline</h1>
+    <p class="lede">Article counts by publication date, stacked by sentiment classification. Hover a bar to see the stories for that day.</p>
+  </section>
+  <CoverageTimeline client:only="react" articles={articles} />
+  <p style="color:var(--muted); font-size:0.9rem; margin-top:1rem;">A publication date cluster is an observation, not evidence of coordination. Many events (earnings calls, filings, statements) attract parallel reporting by design.</p>
+</Layout>

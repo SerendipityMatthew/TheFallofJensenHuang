@@ -1,0 +1,8 @@
+name = "jensen-coverage"
+compatibility_date = "2025-09-01"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "D1"
+database_name = "jensen-coverage"
+database_id = "replace-with-id-from-wrangler-d1-create"

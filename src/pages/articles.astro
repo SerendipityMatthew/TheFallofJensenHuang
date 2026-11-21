@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArticleTable from '../components/ArticleTable.tsx';
+import { articles } from '../lib/data';
+---
+<Layout title="Articles">
+  <section style="padding:2.5rem 0 1rem;">
+    <h1>Article explorer</h1>
+    <p class="lede">Every article links to its original source. Filters are observations. A sentiment label describes framing, not truth.</p>
+  </section>
+  <ArticleTable client:load articles={articles} />
+</Layout>

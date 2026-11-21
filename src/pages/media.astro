@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MediaComparison from '../components/MediaComparison.tsx';
+import { articles } from '../lib/data';
+---
+<Layout title="Media comparison">
+  <section style="padding:2.5rem 0 1rem;">
+    <h1>Media comparison</h1>
+    <p class="lede">Verified articles per publication, with sentiment mix. These counts reflect only what we have logged — not the publication's full output on the topic.</p>
+  </section>
+  <MediaComparison client:only="react" articles={articles} />
+</Layout>
