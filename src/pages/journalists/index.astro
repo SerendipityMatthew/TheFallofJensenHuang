@@ -1,31 +1,5 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { articles, journalists, slug } from '../../lib/data';
-const rows = journalists.map(name => {
-  const byThem = articles.filter(a => (a.authors as string[]).includes(name));
-  return {
-    name,
-    slug: slug(name),
-    count: byThem.length,
-    publications: [...new Set(byThem.map(a => a.publication))],
-  };
-}).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+import Base from '../../layouts/Base.astro';import {articles,journalists,slug} from '../../lib/data';
 ---
-<Layout title="Journalists">
-  <section style="padding:2.5rem 0 1rem;">
-    <h1>Credited journalists</h1>
-    <p class="lede">Only journalists with a verified byline in this archive are listed. Profiles show published work; no personal information is recorded, and no motivation is inferred.</p>
-  </section>
-  <table>
-    <thead><tr><th>Journalist</th><th>Articles</th><th>Publications</th></tr></thead>
-    <tbody>
-      {rows.map(r => (
-        <tr>
-          <td><a href={`/journalists/${r.slug}`}>{r.name}</a></td>
-          <td>{r.count}</td>
-          <td style="color:var(--muted)">{r.publications.join(', ')}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</Layout>
+<Base title="Journalists"><div class="page-heading"><span class="kicker">BYLINES / VERIFIED RECORDS</span><h1>Journalist directory</h1><p>This directory includes only named contributors on verified entries. A research candidate list is not treated as a confirmed roster.</p></div><div class="directory">{journalists.map(name=>{const work=articles.filter(a=>a.authors.includes(name));return <a href={`/journalists/${slug(name)}/`} class="person-card panel"><span class="monogram">{name.split(' ').map(part=>part[0]).slice(0,2).join('')}</span><div><h2>{name}</h2><p>{[...new Set(work.map(a=>a.publication))].join(' · ')}</p><span class="meta">{work.length} VERIFIED {work.length===1?'ARTICLE':'ARTICLES'}</span></div><span class="person-arrow">↗</span></a>})}</div></Base>
+<style>.directory{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:30px 0}.person-card{padding:23px;display:flex;align-items:center;gap:18px}.person-card:hover{border-color:#d86a64}.monogram{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:#263442;color:#dce8ef;font:18px 'Playfair Display',serif;flex:none}.person-card h2{font:600 22px 'Playfair Display',serif;margin:0 0 5px}.person-card p{font-size:13px;color:#a4b4c1;margin:0 0 9px}.person-arrow{margin-left:auto;color:#e37870}@media(max-width:650px){.directory{grid-template-columns:1fr}}</style>
